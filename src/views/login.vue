@@ -1,8 +1,8 @@
 <template>
     <div id="login">
         <h1>Login</h1>
-        <input type="password" name="secret" v-model="input.secret" placeholder="secret" />
-        <button type="button" v-on:click="login()">Login</button>
+        <input type="password" name="secret" v-model="input.secret" placeholder="secret" /><br />
+        <v-btn depressed small color="primary" type="button" v-on:click="login()">Login</v-btn>
     </div>
 </template>
 
