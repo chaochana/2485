@@ -1,8 +1,6 @@
 <template>
     <div id="login">
         <h1>Login</h1>
-        <!-- <input type="text" name="username" v-model="input.username" placeholder="Username" />
-        <input type="password" name="password" v-model="input.password" placeholder="Password" /> -->
         <input type="password" name="secret" v-model="input.secret" placeholder="secret" />
         <button type="button" v-on:click="login()">Login</button>
     </div>
@@ -14,8 +12,7 @@ export default {
   data () {
     return {
       input: {
-        username: '',
-        password: ''
+        secret: ''
       }
     }
   },
@@ -25,8 +22,6 @@ export default {
         var crypto = require('crypto')
         var name = this.input.secret
         var hash = crypto.createHash('md5').update(name).digest('hex')
-        console.log(hash) // 9b74c9897bac770ffc029102a200c5de
-
         if (hash === '5fac2767303478f04d8712579feb0361') {
           localStorage.authenticated = true
           this.$router.replace({ name: 'secure' })

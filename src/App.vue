@@ -14,10 +14,6 @@ export default {
 
   data () {
     return {
-      mockAccount: {
-        username: 'nraboy',
-        password: 'password'
-      }
     }
   },
   mounted () {
@@ -31,10 +27,15 @@ export default {
     },
     logout () {
       localStorage.authenticated = false
+      localStorage.removeItem('authenticated')
       this.$router.replace({ name: 'login' })
     },
     checkAuthenticated () {
-      return localStorage.authenticated
+      if (localStorage.getItem('authenticated') === null) {
+        return false
+      } else {
+        return localStorage.authenticated
+      }
     }
   }
 }
