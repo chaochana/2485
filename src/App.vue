@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+      <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
     </div>
-  <router-view @authenticated="setAuthenticated" />
+  <router-view @authenticated="checkAuthenticated()" />
 </div>
 </template>
 
@@ -14,15 +14,10 @@ export default {
 
   data () {
     return {
-      authenticated: false,
-      mockAccount: {
-        username: 'nraboy',
-        password: 'password'
-      }
     }
   },
   mounted () {
-    if (!this.authenticated) {
+    if (!localStorage.authenticated) {
       this.$router.replace({ name: 'login' })
     }
   },
@@ -31,7 +26,16 @@ export default {
       this.authenticated = status
     },
     logout () {
-      this.authenticated = false
+      localStorage.authenticated = false
+      localStorage.removeItem('authenticated')
+      this.$router.replace({ name: 'login' })
+    },
+    checkAuthenticated () {
+      if (localStorage.getItem('authenticated') === null) {
+        return false
+      } else {
+        return localStorage.authenticated
+      }
     }
   }
 }

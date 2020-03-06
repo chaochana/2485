@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import LoginComponent from "../views/login.vue"
-import SecureComponent from "../views/secure.vue"
+// import Home from '../views/Home.vue'
+import LoginComponent from '../views/login.vue'
+import SecureComponent from '../views/secure.vue'
+import MoreSecureComponent from '../views/more_secure.vue'
 
 Vue.use(VueRouter)
 
@@ -15,18 +16,23 @@ const routes = [
   {
     path: '/',
     redirect: {
-        name: "login"
+      name: 'login'
     }
   },
   {
-      path: "/login",
-      name: "login",
-      component: LoginComponent
+    path: '/login',
+    name: 'login',
+    component: LoginComponent
   },
   {
-      path: "/secure",
-      name: "secure",
-      component: SecureComponent
+    path: '/secure',
+    name: 'secure',
+    component: SecureComponent
+  },
+  {
+    path: '/moresecure',
+    name: 'moreSecure',
+    component: MoreSecureComponent
   }
 ]
 
