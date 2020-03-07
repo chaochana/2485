@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app dense color="DarkGray" dark>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-toolbar-title style='font-weight:900;font-size:2vw;'>2485</v-toolbar-title>
+      <v-toolbar-title style='font-weight:900;font-size:24pt;'>2485</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
 
@@ -11,16 +11,23 @@
         <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
           <v-list-item>
             <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title><router-link to="/home">home</router-link></v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
               <v-icon>mdi-clipboard</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>จัดสมุนไพร</v-list-item-title>
+            <v-list-item-title><router-link to="/order">จัดสมุนไพร</router-link></v-list-item-title>
           </v-list-item>
 
           <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>ลงทะเบียนวันงาน</v-list-item-title>
+            <v-list-item-title><router-link to="/event-register">ลงทะเบียนวันงาน</router-link></v-list-item-title>
           </v-list-item>
 
           <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
