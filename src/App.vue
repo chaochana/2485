@@ -1,10 +1,12 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
-    </div>
-  <router-view @authenticated="checkAuthenticated()" />
-</div>
+  <v-app>
+    <v-container>
+      <div id="nav">
+        <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+      </div>
+      <router-view @authenticated="checkAuthenticated()" />
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -42,7 +44,7 @@ export default {
 </script>
 
 <style>
-    body {
+    /* body {
         background-color: #F0F0F0;
     }
     h1 {
@@ -52,5 +54,5 @@ export default {
     #app {
         width: 1024px;
         margin: auto;
-    }
+    } */
 </style>

@@ -1,8 +1,28 @@
 <template>
     <div id="login">
-        <h1>Login</h1>
-        <input type="password" name="secret" v-model="input.secret" placeholder="secret" /><br />
-        <v-btn depressed small color="primary" type="button" v-on:click="login()">Login</v-btn>
+      <v-form>
+        <v-row>
+          <h1>Login</h1>
+        </v-row>
+        <v-row>
+          <!-- <input type="password" name="secret" v-model="input.secret" placeholder="secret" /><br /> -->
+          <v-col cols="12">
+            <v-text-field
+              v-model="input.secret"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min]"
+              :type="show1 ? 'text' : 'password'"
+              name="secret"
+              label="Secret"
+              counter
+              @click:append="show1 = !show1"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-btn depressed small color="primary" type="button" v-on:click="login()">Login</v-btn>
+        </v-row>
+      </v-form>
     </div>
 </template>
 
@@ -13,6 +33,13 @@ export default {
     return {
       input: {
         secret: ''
+      },
+      show1: false,
+      // password: 'Password',
+      rules: {
+        required: value => !!value || 'Required.',
+        // min: v => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => ('The email and password you entered don\'t match')
       }
     }
   },
