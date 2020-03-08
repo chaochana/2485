@@ -57,10 +57,10 @@ export default {
           localStorage.authenticated = true
           this.$router.replace({ name: 'home' })
         } else {
-          console.log('The username and / or password is incorrect')
+          // console.log('The username and / or password is incorrect')
         }
       } else {
-        console.log('A secret must be present')
+        // console.log('A secret must be present')
       }
     }
   }
