@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Prompt:200,400,800&display=swap');
+
+body {
+    font-family: 'Prompt', sans-serif !important;
+}
+
+.v-application {
+    font-family: 'Prompt', sans-serif !important;
+} 
+
+h1 {
+    font-family: 'Prompt', sans-serif !important;
+}
+
+.display-2 {
+    font-family: 'Prompt', sans-serif !important;
+}
+
+.title .headline {
+    font-family: 'Prompt', sans-serif !important;
+}

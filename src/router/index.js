@@ -1,18 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
-import LoginComponent from '../views/login.vue'
-import SecureComponent from '../views/secure.vue'
-import MoreSecureComponent from '../views/more_secure.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
   {
     path: '/',
     redirect: {
@@ -22,17 +13,22 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginComponent
+    component: () => import('../views/login.vue')
   },
   {
-    path: '/secure',
-    name: 'secure',
-    component: SecureComponent
+    path: '/home',
+    name: 'home',
+    component: () => import('../views/home.vue')
   },
   {
-    path: '/moresecure',
-    name: 'moreSecure',
-    component: MoreSecureComponent
+    path: '/order',
+    name: 'order',
+    component: () => import('../views/order.vue')
+  },
+  {
+    path: '/event-register',
+    name: 'event-register',
+    component: () => import('../views/event-register.vue')
   }
 ]
 

@@ -1,21 +1,56 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
-    </div>
-  <router-view @authenticated="checkAuthenticated()" />
-</div>
+  <v-app>
+    <v-app-bar app dense color="DarkGray" dark>
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-toolbar-title style='font-weight:900;font-size:24pt;'>2485</v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model='drawer' absolute temporary v-if="checkAuthenticated()">
+      <v-list nav dense>
+        <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title><router-link to="/home">home</router-link></v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-clipboard</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title><router-link to="/order">จัดสมุนไพร</router-link></v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title><router-link to="/event-register">ลงทะเบียนวันงาน</router-link></v-list-item-title>
+          </v-list-item>
+
+          <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-content>
+      <router-view @authenticated="checkAuthenticated()" />
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 
 export default {
   name: 'App',
-
-  data () {
-    return {
-    }
+  components: {
   },
+  data: () => ({
+    drawer: false
+  }),
   mounted () {
     if (!localStorage.authenticated) {
       this.$router.replace({ name: 'login' })
@@ -40,17 +75,3 @@ export default {
   }
 }
 </script>
-
-<style>
-    body {
-        background-color: #F0F0F0;
-    }
-    h1 {
-        padding: 0;
-        margin-top: 0;
-    }
-    #app {
-        width: 1024px;
-        margin: auto;
-    }
-</style>
