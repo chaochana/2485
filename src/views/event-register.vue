@@ -113,7 +113,9 @@ export default {
           this.entries = entries
         })
         .catch(err => {
+          /* eslint-disable no-console */
           console.log(err)
+          /* eslint-enable no-console */
         })
         .finally(() => (this.isLoading = false))
     }
