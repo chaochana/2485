@@ -23,6 +23,9 @@
           placeholder="พิมพ์เพื่อเริ่มการค้นหา"
           prepend-icon="mdi-database-search"
           return-object
+          autofocus
+          clearable
+          disable-lookup
         ></v-autocomplete>
       </v-card-text>
       <v-divider></v-divider>
@@ -46,7 +49,7 @@
           color="grey darken-3 white--text"
           @click="model = null"
         >
-          ล้างข้อมูล
+          ย่อหน้าต่าง
           <v-icon right>mdi-close-circle</v-icon>
         </v-btn>
       </v-card-actions>
