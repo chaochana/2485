@@ -1,41 +1,33 @@
 <template>
   <div>
-    <h1>นี่คือหน้าลงทะเบียนวันงาน</h1>
+    <h1>ลงทะเบียนวันงานแม่ชีเมี้ยน</h1>
     <v-card
-      color="red lighten-2"
-      dark
+      color="indigo lighten-2"
+      light
     >
-      <v-card-title class="headline red lighten-3">
-        Search for Public APIs
+      <v-card-title class="headline indigo lighten-1 black--text" style="font-family: 'Prompt', sans-serif !important;">
+        ค้นหาสมาชิก
       </v-card-title>
-      <v-card-text>
-        Explore hundreds of free API's ready for consumption! For more information visit
-        <a
-          class="grey--text text--lighten-3"
-          href="https://github.com/toddmotto/public-apis"
-          target="_blank"
-        >the Github repository</a>.
-      </v-card-text>
       <v-card-text>
         <v-autocomplete
           v-model="model"
           :items="items"
           :loading="isLoading"
           :search-input.sync="search"
-          color="white"
+          color="black"
           hide-no-data
           hide-selected
           item-text="Description"
-          item-value="API"
-          label="Public APIs"
-          placeholder="Start typing to Search"
+          item-value="id"
+          label="ระบุข้อมูลสมาชิก"
+          placeholder="พิมพ์เพื่อเริ่มการค้นหา"
           prepend-icon="mdi-database-search"
           return-object
         ></v-autocomplete>
       </v-card-text>
       <v-divider></v-divider>
       <v-expand-transition>
-        <v-list v-if="model" class="red lighten-3">
+        <v-list v-if="model" class="indigo lighten-3 black--text">
           <v-list-item
             v-for="(field, i) in fields"
             :key="i"
@@ -51,29 +43,24 @@
         <v-spacer></v-spacer>
         <v-btn
           :disabled="!model"
-          color="grey darken-3"
+          color="grey darken-3 white--text"
           @click="model = null"
         >
-          Clear
+          ล้างข้อมูล
           <v-icon right>mdi-close-circle</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
-    <autocomplete />
   </div>
 </template>
 
 <script>
 
-import autocomplete from '@/components/autocomplete.vue'
+import axios from 'axios'
 
 export default {
   name: 'Event-Register',
-  components: {
-    autocomplete
-  },
   data: () => ({
-    descriptionLimit: 60,
     entries: [],
     isLoading: false,
     model: null,
@@ -92,9 +79,7 @@ export default {
     },
     items () {
       return this.entries.map(entry => {
-        const Description = entry.Description.length > this.descriptionLimit
-          ? entry.Description.slice(0, this.descriptionLimit) + '...'
-          : entry.Description
+        const Description = entry.id + ' ' + entry.name + ' ' + entry.lastname
 
         return Object.assign({}, entry, { Description })
       })
@@ -111,13 +96,42 @@ export default {
       this.isLoading = true
 
       // Lazily load input items
-      fetch('https://api.publicapis.org/entries')
-        .then(res => res.json())
-        .then(res => {
-          const { count, entries } = res
-          this.count = count
-          this.entries = entries
-        })
+      // fetch('https://api.publicapis.org/entries')
+      //   .then(res => res.json())
+      //   .then(res => {
+      //     const { count, entries } = res
+      //     this.count = count
+      //     this.entries = entries
+      //   })
+      //   .catch(err => {
+      //     /* eslint-disable no-console */
+      //     console.log(err)
+      //     /* eslint-enable no-console */
+      //   })
+      //   .finally(() => (this.isLoading = false))
+      axios({
+        url: 'http://www.2485.in:8080/v1/graphql',
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+          'x-hasura-admin-secret': 'Karuna2485'
+        },
+        data: {
+          query: `
+              query {
+                member {
+                  id,
+                  title,
+                  name,
+                  lastname
+                }
+              }
+            `
+        }
+      }).then((result) => {
+        this.entries = result.data.data.member
+        this.count = this.entries.length
+      })
         .catch(err => {
           /* eslint-disable no-console */
           console.log(err)

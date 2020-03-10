@@ -14,9 +14,32 @@ export default {
     }
   },
   mounted () {
-    axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => (this.info = response))
+    // axios
+    //   .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+    //   .then(response => (this.info = response))
+    axios({
+      url: 'http://www.2485.in:8080/v1/graphql',
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        'x-hasura-admin-secret': 'Karuna2485'
+      },
+      data: {
+        query: `
+            query {
+              member(limit:20) {
+                id,
+                title,
+                name,
+                lastname
+              }
+            }
+          `
+      }
+    }).then((result) => {
+      this.info = result.data.data.member
+      console.log(result.data)
+    })
   }
 }
 </script>
