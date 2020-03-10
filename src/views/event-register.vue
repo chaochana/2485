@@ -59,13 +59,19 @@
         </v-btn>
       </v-card-actions>
     </v-card>
+    <autocomplete />
   </div>
 </template>
 
 <script>
 
+import autocomplete from '@/components/autocomplete.vue'
+
 export default {
   name: 'Event-Register',
+  components: {
+    autocomplete
+  },
   data: () => ({
     descriptionLimit: 60,
     entries: [],
