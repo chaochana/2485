@@ -26,7 +26,7 @@ export default {
       },
       data: {
         query: `
-            query {
+            {
               member(limit:20) {
                 id,
                 title,

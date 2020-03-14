@@ -26,12 +26,13 @@
           autofocus
           clearable
           disable-lookup
+          cache-items
         ></v-autocomplete>
       </v-card-text>
       <v-divider></v-divider>
       <v-expand-transition>
         <v-list v-if="model" class="indigo lighten-3 black--text">
-          <v-list-item
+          <!-- <v-list-item
             v-for="(field, i) in fields"
             :key="i"
           >
@@ -39,6 +40,12 @@
               <v-list-item-title v-text="field.value"></v-list-item-title>
               <v-list-item-subtitle v-text="field.key"></v-list-item-subtitle>
             </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            {{ model.Description }}
+          </v-list-item> -->
+          <v-list-item>
+            <registerBtn :model="{id: model.id, name: model.name, }"/>
           </v-list-item>
         </v-list>
       </v-expand-transition>
@@ -58,17 +65,27 @@
 </template>
 
 <script>
-
+import registerBtn from '@/components/register-btn.vue'
 import axios from 'axios'
 
 export default {
   name: 'Event-Register',
+  components: {
+    registerBtn
+  },
   data: () => ({
     entries: [],
     isLoading: false,
     model: null,
-    search: null
+    search: null,
+    isRegistered: false
   }),
+  method: {
+    greet: function (event) {
+      alert('Hello ' + this.name + '!')
+      alert(event.target.tagName)
+    }
+  },
   computed: {
     fields () {
       if (!this.model) return []
@@ -81,11 +98,23 @@ export default {
       })
     },
     items () {
-      return this.entries.map(entry => {
-        const Description = entry.id + ' ' + entry.name + ' ' + entry.lastname
+      // if (localStorage.getItem('items') === null || localStorage.items === '[]' || localStorage.items === '') {
+      var items = this.entries.map(entry => {
+        var title
+        if (entry.title != null) {
+          title = entry.title
+        } else {
+          title = ''
+        }
+        const Description = '[' + entry.id + '] ' + title + ' ' + entry.name + ' ' + entry.lastname
 
         return Object.assign({}, entry, { Description })
       })
+
+      return items
+      // } else {
+      //   return localStorage.items
+      // }
     }
   },
   watch: {
@@ -98,20 +127,6 @@ export default {
 
       this.isLoading = true
 
-      // Lazily load input items
-      // fetch('https://api.publicapis.org/entries')
-      //   .then(res => res.json())
-      //   .then(res => {
-      //     const { count, entries } = res
-      //     this.count = count
-      //     this.entries = entries
-      //   })
-      //   .catch(err => {
-      //     /* eslint-disable no-console */
-      //     console.log(err)
-      //     /* eslint-enable no-console */
-      //   })
-      //   .finally(() => (this.isLoading = false))
       axios({
         url: 'http://www.2485.in:8080/v1/graphql',
         method: 'post',

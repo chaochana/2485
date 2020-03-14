@@ -49,7 +49,8 @@ export default {
   components: {
   },
   data: () => ({
-    drawer: false
+    drawer: false,
+    group: null
   }),
   mounted () {
     if (!localStorage.authenticated) {
