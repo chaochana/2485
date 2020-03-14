@@ -8,32 +8,49 @@
 
     <v-navigation-drawer v-model='drawer' absolute temporary v-if="checkAuthenticated()">
       <v-list nav dense>
-        <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-          <v-list-item>
+        <v-list-item-group v-model="group" active-class="amber--text text--accent-4">
+          <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title><router-link to="/home">home</router-link></v-list-item-title>
+            <v-list-item-content>
+              <v-list-item-title>
+                <router-link to="/home" class='drawer-link'>home</router-link>
+              </v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
 
-          <v-list-item>
+          <v-divider></v-divider>
+
+          <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-clipboard</v-icon>
             </v-list-item-icon>
-            <v-list-item-title><router-link to="/order">จัดสมุนไพร</router-link></v-list-item-title>
+            <v-list-item-title>
+              <router-link to="/order" class='drawer-link'>จัดสมุนไพร</router-link>
+            </v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title><router-link to="/event-register">ลงทะเบียนวันงาน</router-link></v-list-item-title>
+            <v-list-item-title>
+              <router-link to="/event-register" class='drawer-link'>ลงทะเบียนวันงาน</router-link>
+            </v-list-item-title>
           </v-list-item>
 
-          <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+          <v-divider></v-divider>
 
         </v-list-item-group>
       </v-list>
+      <template v-slot:append link v-if="checkAuthenticated()">
+        <div class="pa-2">
+          <v-btn block>
+            <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+          </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
 
     <v-content>

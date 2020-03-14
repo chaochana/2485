@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>ลงทะเบียนวันงานแม่ชีเมี้ยน</h1>
+    <h1>ลงทะเบียน</h1>
     <v-card
       color="indigo lighten-2"
       light

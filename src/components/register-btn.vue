@@ -1,8 +1,8 @@
 <template>
   <v-row>
     <v-col align="center" justify="center">
-      <v-btn v-if="!isRegistered" v-on:click='toRegister' x-large color="success">ลงทะเบียนสมาชิก</v-btn>
-      <span v-else>สมาชิกลงทะเบียนแล้ว</span>
+      <v-btn v-if="!isRegistered" v-on:click='toRegister' x-large color="success display-1">กดเพื่อลงทะเบียน</v-btn>
+      <span class='display-3' v-else>ลงทะเบียนแล้ว</span>
       <PulseLoader v-if="isLoading" />
     </v-col>
   </v-row>

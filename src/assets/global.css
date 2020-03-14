@@ -12,7 +12,19 @@ h1 {
     font-family: 'Prompt', sans-serif !important;
 }
 
-.display-2 {
+.v-application .display-4 {
+    font-family: 'Prompt', sans-serif !important;
+}
+
+.v-application .display-3 {
+    font-family: 'Prompt', sans-serif !important;
+}
+
+.v-application .display-2 {
+    font-family: 'Prompt', sans-serif !important;
+}
+
+.v-application .display-1 {
     font-family: 'Prompt', sans-serif !important;
 }
 
@@ -22,4 +34,18 @@ h1 {
 
 .v-application .headline {
     font-family: 'Prompt', sans-serif !important;
+}
+
+.v-btn__content {
+    font-family: 'Prompt', sans-serif !important;
+}
+ 
+.drawer-link {
+    text-decoration: none;
+    color: #212121 !important;
+    font-size: 4vw;
+}
+
+.bold {
+    font-weight: 900 !important;
 }

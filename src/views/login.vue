@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-card clss="login">
       <v-row justify="center">
         <v-col md="3" sm="6" xs="12">
           <v-form id="login">
@@ -27,7 +27,7 @@
           </v-form>
         </v-col>
       </v-row>
-    </div>
+    </v-card>
 </template>
 
 <script>
@@ -72,8 +72,8 @@ export default {
         /* width: 500px; */
         border: 1px solid #CCCCCC;
         background-color: #FFFFFF;
-        margin: auto;
-        margin-top: 200px;
+        margin: 20px;
+        /* margin-top: 200px; */
         padding: 20px;
     }
 </style>

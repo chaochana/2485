@@ -17,6 +17,7 @@
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
+    "vue-number-animation": "^1.0.5",
     "vue-router": "^3.1.5",
     "vue-spinner": "^1.0.3",
     "vuetify": "^2.2.15",
