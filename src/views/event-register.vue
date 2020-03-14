@@ -32,18 +32,6 @@
       <v-divider></v-divider>
       <v-expand-transition>
         <v-list v-if="model" class="indigo lighten-3 black--text">
-          <!-- <v-list-item
-            v-for="(field, i) in fields"
-            :key="i"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="field.value"></v-list-item-title>
-              <v-list-item-subtitle v-text="field.key"></v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            {{ model.Description }}
-          </v-list-item> -->
           <v-list-item>
             <registerBtn :model="{id: model.id, name: model.name, }"/>
           </v-list-item>
@@ -81,10 +69,6 @@ export default {
     isRegistered: false
   }),
   method: {
-    greet: function (event) {
-      alert('Hello ' + this.name + '!')
-      alert(event.target.tagName)
-    }
   },
   computed: {
     fields () {
@@ -98,7 +82,6 @@ export default {
       })
     },
     items () {
-      // if (localStorage.getItem('items') === null || localStorage.items === '[]' || localStorage.items === '') {
       var items = this.entries.map(entry => {
         var title
         if (entry.title != null) {
@@ -112,9 +95,6 @@ export default {
       })
 
       return items
-      // } else {
-      //   return localStorage.items
-      // }
     }
   },
   watch: {

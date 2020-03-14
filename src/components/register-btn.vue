@@ -27,10 +27,7 @@ export default {
       axios({
         url: this.url,
         method: 'post',
-        headers: {
-          'content-type': 'application/json',
-          'x-hasura-admin-secret': 'Karuna2485'
-        },
+        headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': 'Karuna2485' },
         data: {
           variables: {
             member_id: this.model.id,
@@ -73,10 +70,7 @@ export default {
     axios({
       url: this.url,
       method: 'post',
-      headers: {
-        'content-type': 'application/json',
-        'x-hasura-admin-secret': 'Karuna2485'
-      },
+      headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': 'Karuna2485' },
       data: {
         variables: {
           id: this.model.id
