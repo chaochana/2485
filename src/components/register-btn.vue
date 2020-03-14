@@ -1,8 +1,9 @@
 <template>
   <v-row>
-    <v-col>
-      <v-btn v-if="!isRegistered" v-on:click='toRegister'>Register {{ model.id }} {{ this.isRegistered }}</v-btn>
+    <v-col align="center" justify="center">
+      <v-btn v-if="!isRegistered" v-on:click='toRegister' x-large color="success">ลงทะเบียนสมาชิก</v-btn>
       <span v-else>สมาชิกลงทะเบียนแล้ว</span>
+      <PulseLoader v-if="isLoading" />
     </v-col>
   </v-row>
 </template>
@@ -10,20 +11,26 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 export default {
   name: 'registerBtn',
+  components: {
+    PulseLoader
+  },
   data: () => ({
     isRegistered: false,
     output: null,
     register_output: null,
-    url: 'http://www.2485.in:8080/v1/graphql'
+    url: 'http://www.2485.in:8080/v1/graphql',
+    isLoading: false
   }),
   props: {
     model: Object
   },
   methods: {
     toRegister: function () {
+      this.isLoading = true
       axios({
         url: this.url,
         method: 'post',
@@ -63,7 +70,7 @@ export default {
         /* eslint-disable no-console */
         console.log(err)
         /* eslint-enable no-console */
-      })
+      }).finally(() => (this.isLoading = false))
     }
   },
   created () {

@@ -129,13 +129,11 @@ export default {
       }).then((result) => {
         this.entries = result.data.data.member
         this.count = this.entries.length
-      })
-        .catch(err => {
-          /* eslint-disable no-console */
-          console.log(err)
-          /* eslint-enable no-console */
-        })
-        .finally(() => (this.isLoading = false))
+      }).catch(err => {
+        /* eslint-disable no-console */
+        console.log(err)
+        /* eslint-enable no-console */
+      }).finally(() => (this.isLoading = false))
     }
   }
 }
