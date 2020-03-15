@@ -42,15 +42,18 @@
 
           <v-divider></v-divider>
 
+          <v-list-item link v-if="checkAuthenticated()">
+            <v-list-item-icon>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>
+              <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace class='drawer-link'>Logout</router-link>
+            </v-list-item-title>
+          </v-list-item>
+
         </v-list-item-group>
       </v-list>
-      <template v-slot:append link v-if="checkAuthenticated()">
-        <div class="pa-2">
-          <v-btn block>
-            <router-link v-if="checkAuthenticated()" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
-          </v-btn>
-        </div>
-      </template>
+
     </v-navigation-drawer>
 
     <v-content>
