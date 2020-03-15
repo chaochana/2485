@@ -49,3 +49,7 @@ h1 {
 .bold {
     font-weight: 900 !important;
 }
+
+.headline {
+    font-family: 'Prompt', sans-serif !important;
+}

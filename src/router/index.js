@@ -29,7 +29,13 @@ const routes = [
     path: '/event-register',
     name: 'event-register',
     component: () => import('../views/event-register.vue')
+  },
+  {
+    path: '/event-register-full-search',
+    name: 'event-register-full-search',
+    component: () => import('../views/event-register-full-search.vue')
   }
+
 ]
 
 const router = new VueRouter({

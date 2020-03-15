@@ -1,8 +1,11 @@
 <template>
   <v-row>
-    <v-col align="center" justify="center">
-      <v-btn v-if="!isRegistered" v-on:click='toRegister' x-large color="success display-1">กดเพื่อลงทะเบียน</v-btn>
-      <span class='display-3' v-else>ลงทะเบียนแล้ว</span>
+    <v-col align="center">
+      <v-btn v-if="!isRegistered" v-on:click='toRegister' x-large color="success darken-1 display-1">กดเพื่อลงทะเบียน</v-btn>
+      <span class='display-1 green--text text--darken-2' v-else>
+        <v-icon large color="green darken-2">mdi-account-check-outline</v-icon>
+        ลงทะเบียนแล้ว
+      </span>
       <PulseLoader v-if="isLoading" />
     </v-col>
   </v-row>

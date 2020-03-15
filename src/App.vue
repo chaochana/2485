@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dense color="DarkGray" dark>
+    <v-app-bar app dense color="DarkGray" dark flat>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title style='font-weight:900;font-size:24pt;'>2485</v-toolbar-title>
       <v-spacer></v-spacer>
