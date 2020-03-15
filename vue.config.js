@@ -5,6 +5,11 @@ module.exports = {
     config.plugins.delete('prefetch');
     config.plugin('CompressionPlugin').use(CompressionPlugin);
   },
+  pluginOptions: {
+    webpackBundleAnalyzer: {
+      openAnalyzer: false
+    }
+  },
   transpileDependencies: [
     'vuetify'
   ]
