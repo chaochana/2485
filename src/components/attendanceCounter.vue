@@ -1,10 +1,10 @@
 <template>
     <v-card
         class="ma-2"
-        color="cyan lighten-1"
+        color="amber lighten-1"
         max-width="400"
     >
-        <v-row dense style='margin-top:20px'>
+        <v-row dense>
             <v-col align='center'>
                 <number
                 class="bold transition display-4"
