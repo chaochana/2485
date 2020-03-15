@@ -1,7 +1,7 @@
 <template>
     <v-card
         class="mx-auto"
-        color="cyan lighten-1"
+        color="#26c6da"
         max-width="400"
     >
         <v-row dense style='margin-top:20px'>
@@ -30,7 +30,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'attendanceCounter',
+  name: 'medicationCounter',
   data: () => ({
     attendance: 0,
     scaleClass: false,
