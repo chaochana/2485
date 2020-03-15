@@ -1,26 +1,26 @@
 <template>
     <v-card
-        class="mx-auto"
-        color="#26c6da"
+        class="ma-2"
+        color="blue-grey lighten-2"
         max-width="400"
     >
-        <v-row dense style='margin-top:20px'>
+        <v-row dense>
             <v-col align='center'>
                 <number
-                class="bold transition display-4"
-                :class="{scaleBig: scaleClass}"
-                ref="number2"
-                :from="numberFrom"
-                :format="theFormat"
-                :to="attendance"
-                :duration=3
-                easing="Power4.easeOut"
-                @complete="completed"/>
+                  class="bold transition display-4"
+                  :class="{scaleBig: scaleClass}"
+                  ref="number2"
+                  :from="numberFrom"
+                  :format="theFormat"
+                  :to="queue"
+                  :duration=1
+                  easing="Power4.easeOut"
+                  @complete="completed"/>
             </v-col>
         </v-row>
         <v-row>
             <v-col align='center'>
-                ผู้ลงทะเบียนร่วมงานปีแม่ชีเมี้ยน 2563
+                รวมคิวรับสมุนไพรวันนี้
             </v-col>
         </v-row>
     </v-card>
@@ -32,14 +32,14 @@ import axios from 'axios'
 export default {
   name: 'medicationCounter',
   data: () => ({
-    attendance: 0,
+    queue: 0,
     scaleClass: false,
     output: null,
     url: 'http://www.2485.in:8080/v1/graphql'
   }),
   computed: {
     numberFrom () {
-      if (this.attendance > 10) return this.attendance - 10
+      if (this.queue > 10) return this.queue - 10
       else return 0
     }
   },
@@ -47,11 +47,12 @@ export default {
     axios({
       url: this.url,
       method: 'post',
-      headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': 'Karuna2485' },
+      headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
       data: {
+        variables: { date: '2020-02-27' },
         query: `
-          query getAttendance {
-            member_attend_aggregate(where: {event: {_eq: "งานแม่ชีเมี้ยน63"}}) {
+          query getQueueByDate($date: date) {
+            medication_aggregate(where: {order_date: {_eq: $date}}) {
               aggregate {
                 count
               }
@@ -61,7 +62,7 @@ export default {
       }
     }).then((result) => {
       this.output = result.data
-      this.attendance = result.data.data.member_attend_aggregate.aggregate.count
+      this.queue = result.data.data.medication_aggregate.aggregate.count
       this.$refs.number2.play() // Play animation
     }).catch(err => {
       /* eslint-disable no-console */
