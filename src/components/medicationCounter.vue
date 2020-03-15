@@ -1,29 +1,69 @@
 <template>
-    <v-card
-        class="ma-2"
-        color="blue-grey lighten-2"
-        max-width="400"
-    >
-        <v-row dense>
-            <v-col align='center'>
-                <number
-                  class="bold transition display-4"
-                  :class="{scaleBig: scaleClass}"
-                  ref="number2"
-                  :from="numberFrom"
-                  :format="theFormat"
-                  :to="queue"
-                  :duration=1
-                  easing="Power4.easeOut"
-                  @complete="completed"/>
+  <div>
+    <v-row dense>
+      <v-col align='center'>
+        <v-card
+            class="mx-2 mt-1 mb-2"
+            color="blue-grey lighten-2"
+            max-width="400"
+        >
+            <v-row dense>
+                <v-col align='center'>
+                    <number
+                      class="bold transition display-4"
+                      :class="{scaleBig: scaleClass}"
+                      ref="number2"
+                      :from="numberFrom"
+                      :format="theFormat"
+                      :to="queue"
+                      :duration=1
+                      easing="Power4.easeOut"
+                      @complete="completed"/>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col align='center'>
+                    รวมคิวรับสมุนไพรวันนี้
+                </v-col>
+            </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col xs-6>
+        <v-card
+          class="ma-2"
+          color="brown lighten-2"
+          max-width="200">
+          <v-row>
+            <v-col align='center'>สมาชิก</v-col>
+          </v-row>
+          <v-row dense>
+            <v-col align='center' class="pa-0 pt-0 mt-0">
+              <span class="bold transition display-3">
+              600
+              </span>
             </v-col>
-        </v-row>
-        <v-row>
-            <v-col align='center'>
-                รวมคิวรับสมุนไพรวันนี้
+          </v-row>
+        </v-card>
+      </v-col>
+      <v-col xs-6>
+        <v-card
+          class="ma-2"
+          color="teal lighten-2"
+          max-width="200">
+          <v-row><v-col align='center'>จิตอาสา</v-col></v-row>
+          <v-row dense>
+            <v-col align='center' class="pa-0">
+              <span class="bold transition display-3">
+              108
+              </span>
             </v-col>
-        </v-row>
-    </v-card>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
