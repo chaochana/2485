@@ -74,9 +74,6 @@ export default {
       return number.toFixed(0)
     },
     completed () {
-      /* eslint-disable no-console */
-      console.log('Animation ends!')
-      /* eslint-disable no-console */
       this.scaleClass = true
     }
   }
