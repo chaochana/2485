@@ -56,7 +56,7 @@
               <v-list-item>
                 <v-row>
                   <v-col align="center" justify="center">
-                    <span style='font-size:7vw'>
+                    <span class="display-2 bold">
                       {{model.title}}{{model.name}} {{model.lastname}} [{{model.id}}]
                     </span>
                   </v-col>

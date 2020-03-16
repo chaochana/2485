@@ -1,14 +1,15 @@
 <template>
-    <v-card clss="login">
-      <v-row justify="center">
-        <v-col md="3" sm="6" xs="12">
+  <div>
+    <v-row dense>
+      <v-col align="center" justify="center">
+        <v-card
+          class="mx-2 mt-1 mb-2"
+          color="green daraken-1"
+          max-width="400">
           <v-form id="login">
-            <v-row>
-              <h1>Login</h1>
-            </v-row>
-            <v-row justify="center">
-              <!-- <input type="password" name="secret" v-model="input.secret" placeholder="secret" /><br /> -->
-              <v-col>
+            <v-list-item>
+              <v-list-item-content>
+                <v-card-title class="display-3 bold ml-0 pl-0">Login</v-card-title>
                 <v-text-field
                   v-model="input.secret"
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -19,15 +20,16 @@
                   counter
                   @click:append="show1 = !show1"
                 ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-btn depressed small color="primary" type="button" v-on:click="login()">Login</v-btn>
-            </v-row>
+              </v-list-item-content>
+            </v-list-item>
+            <v-card-actions class="justify-center">
+              <v-btn depressed large class="bold" color="primary darken-1" type="button" v-on:click="login()">submit login</v-btn>
+            </v-card-actions>
           </v-form>
-        </v-col>
-      </v-row>
-    </v-card>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -66,14 +68,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-    #login {
-        /* width: 500px; */
-        border: 1px solid #CCCCCC;
-        background-color: #FFFFFF;
-        margin: 20px;
-        /* margin-top: 200px; */
-        padding: 20px;
-    }
-</style>

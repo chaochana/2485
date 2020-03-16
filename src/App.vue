@@ -6,7 +6,7 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-navigation-drawer v-model='drawer' absolute temporary v-if="checkAuthenticated()">
+    <v-navigation-drawer v-model='drawer' absolute temporary v-if="checkAuthenticated()" darK>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="amber--text text--accent-4">
           <v-list-item link>
@@ -15,7 +15,7 @@
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>
-                <router-link to="/home" class='drawer-link'>home</router-link>
+                <router-link to="/home" class='drawer-link'>Home</router-link>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>

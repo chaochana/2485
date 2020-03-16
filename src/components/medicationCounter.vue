@@ -1,45 +1,41 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col align='center'>
+    <v-row dense align="center" justify="center">
+      <v-col align='center' md=6>
         <v-card
-            class="mx-2 mt-1 mb-2"
-            color="blue-grey lighten-2"
-            max-width="400"
-        >
-            <v-row dense>
-                <v-col align='center'>
-                    <number
-                      class="bold transition display-4"
-                      :class="{scaleBig: scaleClass}"
-                      ref="number2"
-                      :from="numberFrom"
-                      :format="theFormat"
-                      :to="queue"
-                      :duration=1
-                      easing="Power4.easeOut"
-                      @complete="completed"/>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col align='center'>
-                    รวมคิวรับสมุนไพรวันนี้
-                </v-col>
-            </v-row>
+          class="justify-center"
+          color="blue-grey">
+          <v-list-item>
+            <v-list-item-content>
+              <number
+                class="bold transition display-4"
+                :class="{scaleBig: scaleClass}"
+                ref="number2"
+                :from="numberFrom"
+                :format="theFormat"
+                :to="queue"
+                :duration=1
+                easing="Power4.easeOut"
+                @complete="completed"/>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content class="justify-center">
+              รวมคิวรับสมุนไพรวันนี้
+            </v-list-item-content>
+          </v-list-item>
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col xs-6>
+    <v-row dense align="center" justify="center">
+      <v-col md=3 xs=6>
         <v-card
-          class="ma-2"
-          color="brown lighten-2"
-          max-width="200">
+          color="brown">
           <v-row>
             <v-col align='center'>สมาชิก</v-col>
           </v-row>
           <v-row dense>
-            <v-col align='center' class="pa-0 pt-0 mt-0">
+            <v-col align='center'>
               <span class="bold transition display-3">
               600
               </span>
@@ -47,14 +43,12 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col xs-6>
+      <v-col md=3 xs=6>
         <v-card
-          class="ma-2"
-          color="teal lighten-2"
-          max-width="200">
+          color="teal">
           <v-row><v-col align='center'>จิตอาสา</v-col></v-row>
           <v-row dense>
-            <v-col align='center' class="pa-0">
+            <v-col align='center'>
               <span class="bold transition display-3">
               108
               </span>

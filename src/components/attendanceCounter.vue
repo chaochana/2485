@@ -1,29 +1,35 @@
 <template>
-    <v-card
-        class="ma-2"
-        color="amber lighten-1"
-        max-width="400"
-    >
-        <v-row dense>
-            <v-col align='center'>
-                <number
-                class="bold transition display-4"
-                :class="{scaleBig: scaleClass}"
-                ref="number2"
-                :from="numberFrom"
-                :format="theFormat"
-                :to="attendance"
-                :duration=1
-                easing="Power4.easeOut"
-                @complete="completed"/>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col align='center'>
-                ผู้ลงทะเบียนร่วมงานปีแม่ชีเมี้ยน 2563
-            </v-col>
-        </v-row>
-    </v-card>
+  <div>
+    <v-row dense>
+      <v-col align='center'>
+        <v-card
+            class="mx-2 mt-1 mb-2"
+            color="amber darken-2"
+            max-width="400"
+        >
+            <v-row dense>
+                <v-col align='center'>
+                    <number
+                    class="bold transition display-4"
+                    :class="{scaleBig: scaleClass}"
+                    ref="number2"
+                    :from="numberFrom"
+                    :format="theFormat"
+                    :to="attendance"
+                    :duration=1
+                    easing="Power4.easeOut"
+                    @complete="completed"/>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col align='center'>
+                    ผู้ลงทะเบียนร่วมงานปีแม่ชีเมี้ยน 2563
+                </v-col>
+            </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
