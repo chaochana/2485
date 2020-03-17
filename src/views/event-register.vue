@@ -18,7 +18,6 @@
                 v-model="inputID"
                 label="รหัสสมาชิก"
                 required
-                class="display-1"
                 type="number"
                 ref="input"
                 autofocus
