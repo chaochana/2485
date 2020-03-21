@@ -54,3 +54,7 @@ h1 {
 .headline {
     font-family: 'Prompt', sans-serif !important;
 }
+
+.v-application .title {
+    font-family: 'Prompt', sans-serif !important;
+}

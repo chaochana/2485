@@ -10,17 +10,17 @@
               <number
                 class="bold transition display-4"
                 :class="{scaleBig: scaleClass}"
-                ref="number2"
+                ref="allQueue"
                 :from="numberFrom"
                 :format="theFormat"
-                :to="queue"
+                :to="allQueue"
                 :duration=1
                 easing="Power4.easeOut"
                 @complete="completed"/>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
-            <v-list-item-content class="justify-center">
+            <v-list-item-content class="title justify-center font-prompt">
               รวมคิวรับสมุนไพรวันนี้
             </v-list-item-content>
           </v-list-item>
@@ -28,29 +28,17 @@
       </v-col>
     </v-row>
     <v-row dense align="center" justify="center">
-      <v-col md=3 xs=6>
+      <v-col md=3 xs=6 v-for="queue in queues" v-bind:key="queue.id" v-bind:index="queue.id">
         <v-card
-          color="brown">
+          color="brown darken-2"
+          class="pa-1">
           <v-row>
-            <v-col align='center'>สมาชิก</v-col>
+            <v-col align='center'>{{ queue.session }}</v-col>
           </v-row>
           <v-row dense>
             <v-col align='center'>
               <span class="bold transition display-3">
-              600
-              </span>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
-      <v-col md=3 xs=6>
-        <v-card
-          color="teal">
-          <v-row><v-col align='center'>จิตอาสา</v-col></v-row>
-          <v-row dense>
-            <v-col align='center'>
-              <span class="bold transition display-3">
-              108
+              {{ queue.count }}
               </span>
             </v-col>
           </v-row>
@@ -66,10 +54,12 @@ import axios from 'axios'
 export default {
   name: 'medicationCounter',
   data: () => ({
-    queue: 0,
+    allQueue: 0,
+    queues: [],
     scaleClass: false,
     output: null,
-    url: 'http://www.2485.in:8080/v1/graphql'
+    url: 'http://www.2485.in:8080/v1/graphql',
+    order_date: '2020-03-05'
   }),
   computed: {
     numberFrom () {
@@ -78,31 +68,8 @@ export default {
     }
   },
   created () {
-    axios({
-      url: this.url,
-      method: 'post',
-      headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
-      data: {
-        variables: { date: '2020-02-27' },
-        query: `
-          query getQueueByDate($date: date) {
-            medication_aggregate(where: {order_date: {_eq: $date}}) {
-              aggregate {
-                count
-              }
-            }
-          }
-        `
-      }
-    }).then((result) => {
-      this.output = result.data
-      this.queue = result.data.data.medication_aggregate.aggregate.count
-      this.$refs.number2.play() // Play animation
-    }).catch(err => {
-      /* eslint-disable no-console */
-      console.log(err)
-      /* eslint-enable no-console */
-    })
+    this.countQueue()
+    this.countQueueBySession()
   },
   methods: {
     theFormat (number) {
@@ -110,6 +77,66 @@ export default {
     },
     completed () {
       this.scaleClass = true
+    },
+    countQueue () {
+      axios({
+        url: this.url,
+        method: 'post',
+        headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
+        data: {
+          variables: { date: this.order_date },
+          query: `
+            query getQueueByDate($date: date) {
+              order_aggregate(where: {order_date: {_eq: $date}}) {
+                aggregate {
+                  count
+                }
+              }
+            }
+          `
+        }
+      }).then((result) => {
+        this.output = result.data
+        this.allQueue = result.data.data.order_aggregate.aggregate.count
+        this.$refs.allQueue.play() // Play animation
+      }).catch(err => {
+        /* eslint-disable no-console */
+        console.log(err)
+        /* eslint-enable no-console */
+      })
+    },
+    countQueueBySession () {
+      var sessions = ['1:Morning:สมาชิก', '2:Volunteer1:จิตอาสา', '3:Cancer:มะเร็ง', '4:VIP:VIP', '5:Stroke:อัมพฤก', '6:Afternoon:บ่าย']
+
+      sessions.forEach(session => {
+        axios({
+          url: this.url,
+          method: 'post',
+          headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
+          data: {
+            variables: { date: this.order_date, session: session.split(':')[1] },
+            query: `
+              query getQueueByDate($date: date, $session: String) {
+                order_aggregate(where: {order_date: {_eq: $date}, session: {_eq: $session}}) {
+                  aggregate {
+                    count
+                  }
+                }
+              }
+            `
+          }
+        }).then((result) => {
+          this.output = result.data
+          // this.queue[session.toLowerCase()] = result.data.data.order_aggregate.aggregate.count
+          this.queues.push({ id: session.split(':')[0], session: session.split(':')[2], count: result.data.data.order_aggregate.aggregate.count })
+        }).catch(err => {
+          /* eslint-disable no-console */
+          console.log(err)
+          /* eslint-enable no-console */
+        })
+      })
+
+      this.queues.sort()
     }
   }
 }
