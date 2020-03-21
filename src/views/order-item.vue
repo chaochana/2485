@@ -1,29 +1,26 @@
 <template>
-  <div class="medication_order">
-    <span class="display-3 right bold">{{ this.session }}</span>
-
-    <!-- <v-card
-      class="mx-auto"
-      max-width="400"
-      tile
-      v-for="order in orders" v-bind:key="order.queue" v-bind:index="order.queue"
-    >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>คิวที่:{{ order.queue }} | สมาชิก:{{ order.member_id }} | {{ typeToThai(order.type) }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card> -->
-    <v-row dense v-for="order in orders" v-bind:key="order.queue" v-bind:index="order.queue" >
-      <v-col class="px-4">
-        <v-btn color="teal" text-color="white" class="title" large block :to="{path: '/order/item/' + order.id}">
-          คิวที่ {{ order.queue }} / สมาชิก {{ order.member_id }} {{ typeToThai(order.type) }}
-          <!-- <v-icon>mdi-arrow-right</v-icon> -->
-        </v-btn>
+  <div>
+    <v-row dense align="center" justify="center">
+      <v-col cols="6" sm="6" v-for="item in items" v-bind:key="item.medicine_id">
+        <v-card
+          color="teal darken-2"
+          class="pa-1 ma-1"
+          >
+          <v-row>
+            <v-col align='center'>
+              <span class="title bold">{{ medicineIDToThai(item.medicine_id) }}</span>
+            </v-col>
+          </v-row>
+          <v-row dense>
+            <v-col align='center'>
+              <span class="bold transition display-4"> {{ item.amount }} </span>
+            </v-col>
+          </v-row>
+        </v-card>
       </v-col>
     </v-row>
 
-    <v-btn color="amber" light large fixed bottom left fab to="/order">
+    <v-btn color="amber" light large fixed bottom left fab v-on:click="goBack">
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
   </div>
@@ -33,28 +30,64 @@
 import axios from 'axios'
 
 export default {
-  name: 'order-list',
+  name: 'order-item',
   data: () => ({
     url: 'http://www.2485.in:8080/v1/graphql',
     order_date: '2020-03-19',
-    orders: null
+    order: null,
+    items: null
   }),
   props: {
-    session: null
+    transaction_id: null
   },
   components: {
   },
   methods: {
-    typeToThai (type) {
+    goBack () {
+      return this.$router.go(-1)
+    },
+    medicineIDToThai (type) {
       switch (type) {
-        case 'TwoWeeks':
-          return '/ สองสัปดาห์'
-        case 'Represent':
-          return '/ รับแทน'
-        case 'Represent_TwoWeeks':
-          return '/ รับแทน-สองสัปดาห์'
+        case '001':
+          return 'สมุนไพรเขียว'
+        case '002':
+          return 'ฟอก'
+        case '003':
+          return 'ปอด'
+        case '004':
+          return 'เบาหวาน'
+        case '005':
+          return 'มะกรูด'
+        case '006':
+          return 'น้ำผึ้ง'
+        case '007':
+          return 'น้ำมะนาว'
+        case '008':
+          return 'น้ำกระดูกหมู'
+        case '009':
+          return 'มะพร้าว'
+        case '010':
+          return 'ตำลึง'
+        case '011':
+          return 'หยอดตา'
+        case '012':
+          return 'ตัด'
+        case '013':
+          return 'ดูดหนอง'
+        case '014':
+          return 'ไพลประคบ'
+        case '015':
+          return 'ไพลน้ำ'
+        case '016':
+          return 'ทาผิว'
+        case '017':
+          return 'ระบาย'
+        case '018':
+          return 'รมตา'
+        case '019':
+          return 'พริกไทย'
         default:
-          return ''
+          return '???'
       }
     }
   },
@@ -110,10 +143,10 @@ export default {
       method: 'post',
       headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
       data: {
-        variables: { date: this.order_date, session: this.session },
+        variables: { transaction_id: this.transaction_id },
         query: `
-          query getQueueByDate($date: date, $session: String) {
-            order(where: {session: {_ilike: $session}, order_date: {_eq: $date}}) {
+          query getQueueByDate($transaction_id: bigint) {
+            order(where: {id: {_eq: $transaction_id}}) {
               id
               member_id
               order
@@ -128,7 +161,8 @@ export default {
         `
       }
     }).then((result) => {
-      this.orders = result.data.data.order
+      this.order = result.data.data.order[0]
+      this.items = JSON.parse(this.order.order)
     }).catch(err => {
       /* eslint-disable no-console */
       console.log(err)

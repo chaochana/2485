@@ -32,6 +32,12 @@ const routes = [
     props: true
   },
   {
+    path: '/order/item/:transaction_id',
+    name: 'orderItem',
+    component: () => import('../views/order-item.vue'),
+    props: true
+  },
+  {
     path: '/event-register',
     name: 'event-register',
     component: () => import('../views/event-register.vue')
