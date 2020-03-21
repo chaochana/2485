@@ -1,16 +1,16 @@
 <template>
   <div class="medication_order">
-    <medicationCounter/>
+    <orderCounter/>
   </div>
 </template>
 
 <script>
-import medicationCounter from '@/components/medicationCounter.vue'
+import orderCounter from '@/components/orderCounter.vue'
 
 export default {
-  name: 'Medication',
+  name: 'Order',
   components: {
-    medicationCounter
+    orderCounter
   }
 }
 </script>

@@ -59,6 +59,7 @@
     <v-content>
       <router-view @authenticated="checkAuthenticated()" />
     </v-content>
+
   </v-app>
 </template>
 

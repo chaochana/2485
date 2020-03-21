@@ -31,15 +31,14 @@
       <v-col md=3 xs=6 v-for="queue in queues" v-bind:key="queue.id" v-bind:index="queue.id">
         <v-card
           color="brown darken-2"
-          class="pa-1">
+          class="pa-1"
+          :to="{path: '/order/' + queue.session_eng}">
           <v-row>
-            <v-col align='center'>{{ queue.session }}</v-col>
+            <v-col align='center'> {{ queue.session }} </v-col>
           </v-row>
           <v-row dense>
             <v-col align='center'>
-              <span class="bold transition display-3">
-              {{ queue.count }}
-              </span>
+              <span class="bold transition display-3"> {{ queue.count }} </span>
             </v-col>
           </v-row>
         </v-card>
@@ -52,7 +51,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'medicationCounter',
+  name: 'orderCounter',
   data: () => ({
     allQueue: 0,
     queues: [],
@@ -128,7 +127,7 @@ export default {
         }).then((result) => {
           this.output = result.data
           // this.queue[session.toLowerCase()] = result.data.data.order_aggregate.aggregate.count
-          this.queues.push({ id: session.split(':')[0], session: session.split(':')[2], count: result.data.data.order_aggregate.aggregate.count })
+          this.queues.push({ id: session.split(':')[0], session_eng: session.split(':')[1], session: session.split(':')[2], count: result.data.data.order_aggregate.aggregate.count })
         }).catch(err => {
           /* eslint-disable no-console */
           console.log(err)

@@ -26,6 +26,12 @@ const routes = [
     component: () => import('../views/order.vue')
   },
   {
+    path: '/order/:session',
+    name: 'orderList',
+    component: () => import('../views/order-list.vue'),
+    props: true
+  },
+  {
     path: '/event-register',
     name: 'event-register',
     component: () => import('../views/event-register.vue')
