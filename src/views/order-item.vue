@@ -1,27 +1,45 @@
 <template>
   <div>
-    <v-row dense align="center" justify="center">
-      <v-col cols="6" sm="6" v-for="item in items" v-bind:key="item.medicine_id">
+    <v-row dense>
+      <v-col>
+        <span style="font-size:10vw" class="bold">{{ order.session }} # คิว {{ order.queue }} </span>
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col align="right" justify="right">
+        <span style="font-size:7vw" class="">{{ member.title }}{{ member.name }} {{ member.lastname }} [{{ order.member_id }}]</span>
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col class="ma-0 pa-0" cols="6" xs="6" sm="4" v-for="item in totalItems" v-bind:key="item.medicine_id">
         <v-card
-          color="teal darken-2"
-          class="pa-1 ma-1"
+          v-bind="item"
+          :color="medicineIDToColor(item.medicine_id)"
+          class="ma-1"
           >
-          <v-row>
+          <v-row dense>
             <v-col align='center'>
-              <span class="title bold">{{ medicineIDToThai(item.medicine_id) }}</span>
+              <span style='font-size:8vw' class="">{{ medicineIDToThai(item.medicine_id) }}</span>
             </v-col>
           </v-row>
           <v-row dense>
             <v-col align='center'>
-              <span class="bold transition display-4"> {{ item.amount }} </span>
+              <span class="bold transition display-4"> {{ item.amountTotal }} </span>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
     </v-row>
 
-    <v-btn color="amber" light large fixed bottom left fab v-on:click="goBack">
+    <v-btn color="amber" light large fixed bottom left fab :to="{path: '/order/' + order.session}">
+      <v-icon class="bold">mdi-clipboard-list</v-icon>
+    </v-btn>
+
+    <v-btn style="margin-right:80px" color="amber" light x-large fixed bottom right fab :to="{path: '/order/' + order.session + '/' + Number(order.queue-1)}">
       <v-icon>mdi-arrow-left</v-icon>
+    </v-btn>
+    <v-btn color="amber" light x-large fixed bottom right fab :to="{path: '/order/' + order.session + '/' + Number(order.queue+1)}">
+      <v-icon>mdi-arrow-right</v-icon>
     </v-btn>
   </div>
 </template>
@@ -33,14 +51,27 @@ export default {
   name: 'order-item',
   data: () => ({
     url: 'http://www.2485.in:8080/v1/graphql',
-    order_date: '2020-03-19',
+    order_date: '2020-03-05',
     order: null,
-    items: null
+    items: null,
+    member: null
   }),
   props: {
-    transaction_id: null
+    session: null,
+    queue: null
   },
   components: {
+  },
+  computed: {
+    totalItems () {
+      var totalItems = this.items.map(item => {
+        var amountTotal = Number(item.amount) + Number(item.add_amount)
+
+        return Object.assign({}, item, { amountTotal })
+      })
+
+      return totalItems
+    }
   },
   methods: {
     goBack () {
@@ -49,7 +80,7 @@ export default {
     medicineIDToThai (type) {
       switch (type) {
         case '001':
-          return 'สมุนไพรเขียว'
+          return 'เขียว'
         case '002':
           return 'ฟอก'
         case '003':
@@ -63,7 +94,7 @@ export default {
         case '007':
           return 'น้ำมะนาว'
         case '008':
-          return 'น้ำกระดูกหมู'
+          return 'กระดูกหมู'
         case '009':
           return 'มะพร้าว'
         case '010':
@@ -89,85 +120,117 @@ export default {
         default:
           return '???'
       }
+    },
+    medicineIDToColor (medicineID) {
+      switch (medicineID) {
+        case '001':
+          return 'green darken-3'
+        case '002':
+          return 'brown darken-3'
+        case '003':
+          return 'brown darken-3'
+        case '004':
+          return 'pink darken-3'
+        case '005':
+          return 'yellow darken-3'
+        case '006':
+          return 'darkGrey darken-3'
+        case '007':
+          return 'lime darken-3'
+        case '008':
+          return 'grey darken-3'
+        case '009':
+          return 'green darken-1'
+        case '010':
+          return 'light-green'
+        case '011':
+          return 'red darken-2'
+        case '012':
+          return 'red darken-4'
+        case '013':
+          return 'brown darken-4'
+        case '014':
+          return 'amber darken-4'
+        case '015':
+          return 'amber darken-3'
+        case '016':
+          return 'teal'
+        case '017':
+          return 'blue-grey darken-2'
+        case '018':
+          return 'light-blue darken-2'
+        case '019':
+          return 'grey darken-2'
+        default:
+          return 'teal'
+      }
+    },
+    getOrderItems () {
+      axios({
+        url: this.url,
+        method: 'post',
+        headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
+        data: {
+          variables: { session: this.session, queue: this.queue, order_date: this.order_date },
+          query: `
+            query getQueueByDate($session: String, $queue: Int, $order_date: date) {
+              order(where: {session: {_ilike: $session}, queue: {_eq: $queue}, order_date: {_eq: $order_date}}) {
+                id
+                member_id
+                order
+                order_date
+                queue
+                session
+                type
+                created_at
+                updated_at
+              }
+            }
+          `
+        }
+      }).then((result) => {
+        this.order = result.data.data.order[0]
+        this.items = JSON.parse(this.order.order)
+        this.getFullName()
+      }).catch(err => {
+        /* eslint-disable no-console */
+        console.log(err)
+        /* eslint-enable no-console */
+      })
+    },
+    getFullName () {
+      axios({
+        url: this.url,
+        method: 'post',
+        headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
+        data: {
+          variables: { member_id: this.order.member_id },
+          query: `
+            query getMemberByID($member_id: bigint) {
+              member(where: {id: {_eq: $member_id}}) {
+                title
+                name
+                lastname
+              }
+            }
+          `
+        }
+      }).then((result) => {
+        this.member = result.data.data.member[0]
+      }).catch(err => {
+        /* eslint-disable no-console */
+        console.log(err)
+        /* eslint-enable no-console */
+      })
     }
   },
-  // methods: {
-  //   getFullName (memberID) {
-  //     var member = ''
-  //     console.log(memberID)
-  //     axios({
-  //       url: this.url,
-  //       method: 'post',
-  //       headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
-  //       data: {
-  //         variables: { member_id: memberID },
-  //         query: `
-  //           query getMemberByID($member_id: bigint) {
-  //             member(where: {id: {_eq: $member_id}}) {
-  //               title
-  //               name
-  //               lastname
-  //             }
-  //           }
-  //         `
-  //       }
-  //     }).then((result) => {
-  //       member = result.data.data.member[0]
-  //       console.log(member)
-  //     }).catch(err => {
-  //       /* eslint-disable no-console */
-  //       console.log(err)
-  //       /* eslint-enable no-console */
-  //     })
-
-  //     const fullName = member.title + ' ' + member.name + ' ' + member.lastname
-
-  //     return fullName
-  //   }
-  // },
-  // computed: {
-  //   ordersMembers () {
-  //     var ordersMembers = this.orders.map(order => {
-  //       console.log(order.member_id)
-  //       var fullName = this.getFullName(order.member_id)
-
-  //       return Object.assign({}, order, { fullName })
-  //     })
-
-  //     return ordersMembers
-  //   }
-  // },
   created () {
-    axios({
-      url: this.url,
-      method: 'post',
-      headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
-      data: {
-        variables: { transaction_id: this.transaction_id },
-        query: `
-          query getQueueByDate($transaction_id: bigint) {
-            order(where: {id: {_eq: $transaction_id}}) {
-              id
-              member_id
-              order
-              order_date
-              queue
-              session
-              type
-              created_at
-              updated_at
-            }
-          }
-        `
-      }
-    }).then((result) => {
-      this.order = result.data.data.order[0]
-      this.items = JSON.parse(this.order.order)
-    }).catch(err => {
-      /* eslint-disable no-console */
-      console.log(err)
-      /* eslint-enable no-console */
-    })
+    this.getOrderItems()
+  },
+  watch: {
+    $route () {
+      this.getOrderItems()
+    }
   }
 }
 </script>

@@ -32,7 +32,7 @@ const routes = [
     props: true
   },
   {
-    path: '/order/item/:transaction_id',
+    path: '/order/:session/:queue',
     name: 'orderItem',
     component: () => import('../views/order-item.vue'),
     props: true

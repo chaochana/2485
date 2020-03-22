@@ -1,22 +1,14 @@
 <template>
   <div class="medication_order">
-    <span class="display-3 right bold">{{ this.session }}</span>
+    <v-row dense>
+      <v-col>
+        <span style="font-size:10vw" class="bold">{{ session }}</span>
+      </v-col>
+    </v-row>
 
-    <!-- <v-card
-      class="mx-auto"
-      max-width="400"
-      tile
-      v-for="order in orders" v-bind:key="order.queue" v-bind:index="order.queue"
-    >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>คิวที่:{{ order.queue }} | สมาชิก:{{ order.member_id }} | {{ typeToThai(order.type) }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card> -->
     <v-row dense v-for="order in orders" v-bind:key="order.queue" v-bind:index="order.queue" >
       <v-col class="px-4">
-        <v-btn color="teal" text-color="white" class="title" large block :to="{path: '/order/item/' + order.id}">
+        <v-btn color="teal" text-color="white" class="title" large block :to="{path: '/order/' + order.session + '/' + order.queue}">
           คิวที่ {{ order.queue }} / สมาชิก {{ order.member_id }} {{ typeToThai(order.type) }}
           <!-- <v-icon>mdi-arrow-right</v-icon> -->
         </v-btn>
@@ -24,7 +16,7 @@
     </v-row>
 
     <v-btn color="amber" light large fixed bottom left fab to="/order">
-      <v-icon>mdi-arrow-left</v-icon>
+      <v-icon>mdi-home</v-icon>
     </v-btn>
   </div>
 </template>
