@@ -1,44 +1,72 @@
 <template>
   <div>
-    <v-row dense>
-      <v-col>
-        <span style="font-size:10vw" class="bold">{{ order.session }} # คิว {{ order.queue }} </span>
-      </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col align="right" justify="right">
-        <span style="font-size:7vw" class="">{{ member.title }}{{ member.name }} {{ member.lastname }} [{{ order.member_id }}]</span>
-      </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col class="ma-0 pa-0" cols="6" xs="6" sm="4" v-for="item in totalItems" v-bind:key="item.medicine_id">
-        <v-card
-          v-bind="item"
-          :color="medicineIDToColor(item.medicine_id)"
-          class="ma-1"
-          >
-          <v-row dense>
-            <v-col align='center'>
-              <span style='font-size:8vw' class="">{{ medicineIDToThai(item.medicine_id) }}</span>
-            </v-col>
-          </v-row>
-          <v-row dense>
-            <v-col align='center'>
-              <span class="bold transition display-4"> {{ item.amountTotal }} </span>
-            </v-col>
-          </v-row>
-        </v-card>
+    <div v-if='render'>
+      <v-row dense>
+        <v-col align='right'>
+          {{ this.order_date }}
+        </v-col>
+      </v-row>
+      <div v-if='order'>
+        <v-row dense>
+          <v-col align="center" justify="center">
+            <span style="font-size:10vw" class="bold">{{ order.session }} # คิว {{ order.queue }} </span>
+          </v-col>
+        </v-row>
+        <v-row dense>
+          <v-col align="center" justify="center">
+            <span style="font-size:7vw" class="">{{ member.title }}{{ member.name }} {{ member.lastname }} [{{ order.member_id }}]</span>
+          </v-col>
+        </v-row>
+        <v-row dense>
+          <v-col class="ma-0 pa-0" cols="6" xs="6" sm="4" v-for="item in totalItems" v-bind:key="item.medicine_id">
+            <v-card
+              v-bind="item"
+              :color="medicineIDToColor(item.medicine_id)"
+              class="ma-1"
+              >
+              <v-row dense>
+                <v-col align='center'>
+                  <span style='font-size:8vw' class="">{{ medicineIDToThai(item.medicine_id) }}</span>
+                </v-col>
+              </v-row>
+              <v-row dense>
+                <v-col align='center'>
+                  <span class="bold transition display-4"> {{ item.amountTotal }} </span>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+      <div v-else>
+        <v-row dense>
+          <v-col align="center" justify="center">
+            <span style="font-size:10vw" class="bold">{{ this.session }} # คิว {{ this.queue }} </span>
+          </v-col>
+        </v-row>
+        <v-row dense>
+          <v-col align="center" justify="center">
+            <v-alert type="error" style="font-size:7vw">
+              ไม่พบคิวนี้
+            </v-alert>
+          </v-col>
+        </v-row>
+      </div>
+    </div>
+    <v-row dense v-if="!render">
+      <v-col align='right'>
+        <PulseLoader/>
       </v-col>
     </v-row>
 
-    <v-btn color="amber" light large fixed bottom left fab :to="{path: '/order/' + order.session}">
+    <v-btn color="amber" light large fixed bottom left fab :to="{path: '/order/' + this.session}">
       <v-icon class="bold">mdi-clipboard-list</v-icon>
     </v-btn>
 
-    <v-btn style="margin-right:80px" color="amber" light x-large fixed bottom right fab :to="{path: '/order/' + order.session + '/' + Number(order.queue-1)}">
+    <v-btn style="margin-right:80px" color="amber" light x-large fixed bottom right fab :to="{path: '/order/' + this.session + '/' + (Number(this.queue)-1)}">
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
-    <v-btn color="amber" light x-large fixed bottom right fab :to="{path: '/order/' + order.session + '/' + Number(order.queue+1)}">
+    <v-btn color="amber" light x-large fixed bottom right fab :to="{path: '/order/' + this.session + '/' + (Number(this.queue)+1)}">
       <v-icon>mdi-arrow-right</v-icon>
     </v-btn>
   </div>
@@ -46,6 +74,7 @@
 
 <script>
 import axios from 'axios'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 export default {
   name: 'order-item',
@@ -54,13 +83,15 @@ export default {
     order_date: '2020-03-05',
     order: null,
     items: null,
-    member: null
+    member: null,
+    render: null
   }),
   props: {
     session: null,
     queue: null
   },
   components: {
+    PulseLoader
   },
   computed: {
     totalItems () {
@@ -196,7 +227,7 @@ export default {
         /* eslint-disable no-console */
         console.log(err)
         /* eslint-enable no-console */
-      })
+      }).finally(() => (this.render = true))
     },
     getFullName () {
       axios({
@@ -226,9 +257,10 @@ export default {
   },
   created () {
     this.getOrderItems()
+    this.render = false
   },
   watch: {
-    $route () {
+    $route: function (to, from) {
       this.getOrderItems()
     }
   }

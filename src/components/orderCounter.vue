@@ -1,5 +1,10 @@
 <template>
   <div>
+    <v-row dense>
+      <v-col align='right'>
+        {{ this.order_date }}
+      </v-col>
+    </v-row>
     <v-row dense align="center" justify="center">
       <v-col align='center' md=6>
         <v-card

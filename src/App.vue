@@ -31,14 +31,14 @@
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item link>
+          <!-- <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>
               <router-link to="/event-register" class='drawer-link'>ลงทะเบียนวันงาน</router-link>
             </v-list-item-title>
-          </v-list-item>
+          </v-list-item> -->
 
           <v-divider></v-divider>
 
@@ -57,7 +57,9 @@
     </v-navigation-drawer>
 
     <v-content>
-      <router-view @authenticated="checkAuthenticated()" />
+      <transition name="fade" mode="out-in">
+        <router-view :key="$route.params.queue" class="view" @authenticated="checkAuthenticated()" />
+      </transition>
     </v-content>
 
   </v-app>

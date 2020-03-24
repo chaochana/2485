@@ -1,5 +1,10 @@
 <template>
-  <div class="medication_order">
+  <div>
+    <v-row dense>
+      <v-col align='right'>
+        {{ this.order_date }}
+      </v-col>
+    </v-row>
     <v-row dense>
       <v-col>
         <span style="font-size:10vw" class="bold">{{ session }}</span>
@@ -28,7 +33,7 @@ export default {
   name: 'order-list',
   data: () => ({
     url: 'http://www.2485.in:8080/v1/graphql',
-    order_date: '2020-03-19',
+    order_date: '2020-03-05',
     orders: null
   }),
   props: {

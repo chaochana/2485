@@ -58,3 +58,29 @@ h1 {
 .v-application .title {
     font-family: 'Prompt', sans-serif !important;
 }
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .2s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+
+.slide-enter-active, .slide-leave-active {
+    transition: 300ms;
+}
+.slide-enter-to {
+    position: relative;
+    left: 0;
+}
+.slide-leave {
+    position: absolute;
+}
+.slide-enter {
+    left: -100vw;
+    position: absolute;
+}
+.slide-leave-to {
+    right: -100vw;
+}
