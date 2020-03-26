@@ -63,7 +63,7 @@ export default {
     scaleClass: false,
     output: null,
     url: 'http://www.2485.in:8080/v1/graphql',
-    order_date: '2020-03-05'
+    order_date: '2020-03-26'
   }),
   computed: {
     numberFrom () {
