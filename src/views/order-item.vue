@@ -79,7 +79,7 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 export default {
   name: 'order-item',
   data: () => ({
-    url: 'http://www.2485.in:8080/v1/graphql',
+    url: 'https://www.2485.in:8080/v1/graphql',
     order_date: '2020-03-26',
     order: null,
     items: null,

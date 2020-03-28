@@ -41,7 +41,7 @@ export default {
     attendance: 0,
     scaleClass: false,
     output: null,
-    url: 'http://www.2485.in:8080/v1/graphql'
+    url: 'https://www.2485.in:8080/v1/graphql'
   }),
   computed: {
     numberFrom () {
