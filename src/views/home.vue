@@ -11,11 +11,6 @@ export default {
   name: 'Home',
   components: {
     attendanceCounter
-  },
-  created () {
-    /* eslint-disable no-console */
-    console.log('Created')
-    /* eslint-disable no-console */
   }
 }
 </script>
