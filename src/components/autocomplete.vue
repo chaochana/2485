@@ -18,7 +18,7 @@ export default {
     //   .get('https://api.coindesk.com/v1/bpi/currentprice.json')
     //   .then(response => (this.info = response))
     axios({
-      url: 'http://www.2485.in:8080/v1/graphql',
+      url: 'https://www.2485.in:8080/v1/graphql',
       method: 'post',
       headers: { 'content-type': 'application/json', 'x-hasura-admin-secret': process.env.VUE_APP_HASURA_GQL_KEY },
       data: {

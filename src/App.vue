@@ -58,8 +58,7 @@
 
     <v-content>
       <transition name="fade" mode="out-in">
-        <!-- <router-view :key="$route.params.queue" class="view" @authenticated="checkAuthenticated()" /> -->
-        <router-view :key="$route.params.queue" class="view" />
+        <router-view :key="$route.params.queue" class="view" @authenticated="checkAuthenticated()" />
       </transition>
     </v-content>
 

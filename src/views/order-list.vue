@@ -32,7 +32,7 @@ import axios from 'axios'
 export default {
   name: 'order-list',
   data: () => ({
-    url: 'http://www.2485.in:8080/v1/graphql',
+    url: 'https://www.2485.in:8080/v1/graphql',
     order_date: '2020-03-26',
     orders: null
   }),
