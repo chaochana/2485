@@ -25,7 +25,7 @@ export default {
     isRegistered: false,
     output: null,
     register_output: null,
-    url: 'https://www.2485.in:8080/v1/graphql',
+    url: 'http://www.2485.in:8080/v1/graphql',
     isLoading: false
   }),
   props: {
