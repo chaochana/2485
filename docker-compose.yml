@@ -7,9 +7,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - '.:/app'
-      - '/app/node_modules'
+    # volumes:
+    #   - '.:/app'
+    #   - '/app/node_modules'
     ports:
       - 80:80
       - 443:443
