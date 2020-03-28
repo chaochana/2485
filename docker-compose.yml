@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+
+  app:
+    container_name: '2485'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 80:80
+      - 443:443
