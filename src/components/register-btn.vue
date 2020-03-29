@@ -25,7 +25,7 @@ export default {
     isRegistered: false,
     output: null,
     register_output: null,
-    url: 'http://www.2485.in:8080/v1/graphql',
+    url: process.env.VUE_APP_GQL_URL,
     isLoading: false
   }),
   props: {
